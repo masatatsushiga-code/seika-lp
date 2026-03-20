@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>青歌｜物件リスクチェック・不動産調査代行</title>
+<meta name="description" content="18歳宅建士が23区・横浜エリアの物件調査を代行。接道リスク・再建築不可・用途制限を徹底チェック。買った後に後悔しないために。">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0e0e0c;
+  --bg2:#161614;
+  --bg3:#1e1e1b;
+  --border:#2e2e2a;
+  --text:#f0ede6;
+  --muted:#8a8880;
+  --gold:#c9a84c;
+  --gold2:#e8c96a;
+  --cream:#f5f0e8;
+  --red:#c94c4c;
+  --serif:'Noto Serif JP',serif;
+  --sans:'Noto Sans JP',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);overflow-x:hidden;}
+
+/* Nav */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(14,14,12,.92);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  padding:14px 24px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.nav-logo{font-family:var(--serif);font-size:18px;font-weight:700;color:var(--gold);letter-spacing:.08em;}
+.nav-sub{font-size:10px;color:var(--muted);letter-spacing:.1em;margin-top:1px;}
+.nav-cta{
+  background:var(--gold);color:#0e0e0c;
+  padding:8px 20px;border-radius:2px;
+  font-size:12px;font-weight:700;letter-spacing:.06em;
+  text-decoration:none;transition:opacity .2s;
+  white-space:nowrap;
+}
+.nav-cta:hover{opacity:.85;}
+
+/* Hero */
+.hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:100px 24px 60px;
+  position:relative;overflow:hidden;
+  text-align:center;
+}
+.hero-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(201,168,76,.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(201,168,76,.04) 1px,transparent 1px);
+  background-size:60px 60px;
+}
+.hero-vignette{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse at center,transparent 40%,var(--bg) 80%);
+}
+.hero-content{position:relative;z-index:1;max-width:760px;}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  border:1px solid var(--gold);color:var(--gold);
+  padding:5px 14px;border-radius:2px;
+  font-size:11px;letter-spacing:.12em;margin-bottom:28px;
+}
+.hero-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+h1{
+  font-family:var(--serif);
+  font-size:clamp(28px,5vw,52px);
+  font-weight:700;line-height:1.35;
+  letter-spacing:.04em;
+  margin-bottom:20px;
+}
+h1 em{font-style:normal;color:var(--gold);}
+.hero-sub{
+  font-size:clamp(13px,2vw,16px);
+  color:var(--muted);line-height:1.9;
+  margin-bottom:36px;max-width:540px;margin-left:auto;margin-right:auto;
+}
+.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+.btn-primary{
+  background:var(--gold);color:#0e0e0c;
+  padding:14px 32px;border-radius:2px;
+  font-size:14px;font-weight:700;letter-spacing:.06em;
+  text-decoration:none;transition:all .2s;border:none;cursor:pointer;
+}
+.btn-primary:hover{background:var(--gold2);}
+.btn-secondary{
+  background:transparent;color:var(--text);
+  padding:14px 32px;border-radius:2px;border:1px solid var(--border);
+  font-size:14px;letter-spacing:.04em;
+  text-decoration:none;transition:all .2s;
+}
+.btn-secondary:hover{border-color:var(--gold);color:var(--gold);}
+
+/* Stats bar */
+.stats-bar{
+  background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  padding:20px 24px;
+  display:flex;justify-content:center;gap:0;flex-wrap:wrap;
+}
+.stat-item{
+  text-align:center;padding:0 32px;
+  border-right:1px solid var(--border);
+}
+.stat-item:last-child{border-right:none;}
+.stat-num{font-family:var(--serif);font-size:28px;font-weight:700;color:var(--gold);line-height:1;}
+.stat-label{font-size:11px;color:var(--muted);margin-top:4px;letter-spacing:.06em;}
+
+/* Section */
+section{padding:80px 24px;}
+.section-inner{max-width:900px;margin:0 auto;}
+.section-label{
+  font-size:10px;letter-spacing:.16em;color:var(--gold);
+  margin-bottom:10px;display:flex;align-items:center;gap:8px;
+}
+.section-label::before{content:'';width:24px;height:1px;background:var(--gold);}
+h2{
+  font-family:var(--serif);font-size:clamp(22px,3.5vw,36px);
+  font-weight:700;letter-spacing:.04em;line-height:1.4;margin-bottom:14px;
+}
+.section-desc{font-size:14px;color:var(--muted);line-height:1.9;margin-bottom:48px;}
+
+/* Pain points */
+.pain-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-bottom:32px;}
+.pain-item{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:4px;padding:20px;
+  display:flex;gap:14px;align-items:flex-start;
+}
+.pain-icon{font-size:20px;flex-shrink:0;margin-top:2px;}
+.pain-title{font-size:13px;font-weight:700;margin-bottom:4px;}
+.pain-desc{font-size:12px;color:var(--muted);line-height:1.6;}
+
+/* Services */
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;}
+.service-card{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:4px;padding:24px;
+  transition:border-color .2s;
+  position:relative;overflow:hidden;
+}
+.service-card:hover{border-color:var(--gold);}
+.service-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:var(--gold);transform:scaleX(0);transform-origin:left;
+  transition:transform .3s;
+}
+.service-card:hover::before{transform:scaleX(1);}
+.service-num{
+  font-family:var(--serif);font-size:11px;color:var(--gold);
+  letter-spacing:.12em;margin-bottom:10px;
+}
+.service-title{font-size:15px;font-weight:700;margin-bottom:8px;}
+.service-desc{font-size:12px;color:var(--muted);line-height:1.7;}
+
+/* Strengths */
+.strength-list{display:flex;flex-direction:column;gap:0;}
+.strength-item{
+  display:flex;gap:20px;padding:24px 0;
+  border-bottom:1px solid var(--border);
+  align-items:flex-start;
+}
+.strength-item:last-child{border-bottom:none;}
+.strength-num{
+  font-family:var(--serif);font-size:32px;font-weight:700;
+  color:rgba(201,168,76,.2);flex-shrink:0;width:48px;line-height:1;
+}
+.strength-body{}
+.strength-title{font-size:15px;font-weight:700;margin-bottom:6px;}
+.strength-desc{font-size:13px;color:var(--muted);line-height:1.8;}
+.strength-tag{
+  display:inline-block;font-size:10px;padding:2px 8px;
+  border:1px solid var(--gold);color:var(--gold);
+  border-radius:2px;margin-top:8px;letter-spacing:.06em;
+}
+
+/* Pricing */
+.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;}
+.price-card{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:4px;padding:28px;
+}
+.price-card.featured{border-color:var(--gold);position:relative;}
+.price-featured-badge{
+  position:absolute;top:-1px;right:20px;
+  background:var(--gold);color:#0e0e0c;
+  font-size:10px;font-weight:700;letter-spacing:.08em;
+  padding:3px 12px;border-radius:0 0 4px 4px;
+}
+.price-type{font-size:11px;letter-spacing:.1em;color:var(--muted);margin-bottom:8px;}
+.price-name{font-family:var(--serif);font-size:18px;font-weight:700;margin-bottom:14px;}
+.price-amount{
+  font-family:var(--serif);font-size:32px;font-weight:700;
+  color:var(--gold);margin-bottom:4px;
+}
+.price-amount span{font-size:14px;color:var(--muted);font-family:var(--sans);}
+.price-note{font-size:11px;color:var(--muted);margin-bottom:20px;}
+.price-features{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:24px;}
+.price-features li{
+  font-size:12px;color:var(--muted);
+  display:flex;align-items:flex-start;gap:8px;line-height:1.5;
+}
+.price-features li::before{content:'―';color:var(--gold);flex-shrink:0;}
+.price-cta{
+  display:block;text-align:center;padding:11px;
+  border-radius:2px;font-size:13px;font-weight:700;
+  letter-spacing:.04em;text-decoration:none;transition:all .2s;
+}
+.price-cta-primary{background:var(--gold);color:#0e0e0c;}
+.price-cta-primary:hover{background:var(--gold2);}
+.price-cta-secondary{border:1px solid var(--border);color:var(--text);}
+.price-cta-secondary:hover{border-color:var(--gold);color:var(--gold);}
+
+/* Flow */
+.flow-steps{display:flex;flex-direction:column;gap:0;}
+.flow-step{
+  display:flex;gap:20px;padding:24px 0;
+  border-bottom:1px solid var(--border);
+}
+.flow-step:last-child{border-bottom:none;}
+.flow-step-num{
+  width:40px;height:40px;border-radius:50%;
+  border:1px solid var(--gold);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--serif);font-size:14px;color:var(--gold);
+  flex-shrink:0;
+}
+.flow-step-body{flex:1;padding-top:8px;}
+.flow-step-title{font-size:14px;font-weight:700;margin-bottom:4px;}
+.flow-step-desc{font-size:12px;color:var(--muted);line-height:1.7;}
+
+/* CTA section */
+.cta-section{
+  background:var(--bg2);border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  padding:80px 24px;text-align:center;
+}
+.cta-inner{max-width:600px;margin:0 auto;}
+.cta-section h2{margin-bottom:16px;}
+.cta-section p{font-size:14px;color:var(--muted);line-height:1.9;margin-bottom:32px;}
+
+/* Warning box */
+.warning-box{
+  background:rgba(201,76,76,.08);border:1px solid rgba(201,76,76,.3);
+  border-radius:4px;padding:16px 20px;margin:32px 0;
+  font-size:13px;color:#e88080;line-height:1.7;
+}
+.warning-box strong{color:var(--red);}
+
+/* Footer */
+footer{
+  background:var(--bg2);border-top:1px solid var(--border);
+  padding:32px 24px;text-align:center;
+}
+.footer-logo{font-family:var(--serif);font-size:20px;color:var(--gold);margin-bottom:8px;}
+.footer-text{font-size:11px;color:var(--muted);line-height:1.8;}
+.footer-links{display:flex;gap:20px;justify-content:center;margin-top:16px;flex-wrap:wrap;}
+.footer-link{font-size:11px;color:var(--muted);text-decoration:none;}
+.footer-link:hover{color:var(--gold);}
+
+/* Animations */
+.fade-in{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;}
+.fade-in.visible{opacity:1;transform:translateY(0);}
+
+/* Responsive */
+@media(max-width:600px){
+  .stat-item{padding:12px 16px;flex:1 1 45%;}
+  .strength-item{flex-direction:column;gap:8px;}
+  .strength-num{font-size:20px;width:auto;}
+  nav{padding:12px 16px;}
+  .nav-sub{display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+  <div>
+    <div class="nav-logo">青歌</div>
+    <div class="nav-sub">物件リスクチェック｜宅建</div>
+  </div>
+  <a href="#contact" class="nav-cta">無料相談はこちら</a>
+</nav>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-vignette"></div>
+  <div class="hero-content fade-in">
+    <div class="hero-badge">23区・横浜エリア対応｜最短当日着手</div>
+    <h1>買った後に<br>後悔しないために、<br><em>プロの目</em>を入れる。</h1>
+    <p class="hero-sub">
+      投資家様の「時間」と「安心」を買う実務代行サービス。<br>
+      18歳宅建士がフットワーク軽く現地・役所調査を代行。<br>
+      重説ではなく、<strong>事実確認の代行</strong>です。
+    </p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-primary">無料で相談する</a>
+      <a href="#service" class="btn-secondary">サービスを見る</a>
+    </div>
+  </div>
+</div>
+
+<!-- Stats -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <div class="stat-num">23区<span style="font-size:16px;">＋</span>横浜</div>
+    <div class="stat-label">対応エリア</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">当日〜</div>
+    <div class="stat-label">着手スピード</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">100枚<span style="font-size:16px;">超</span></div>
+    <div class="stat-label">現場写真納品</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">宅建士</div>
+    <div class="stat-label">保有資格</div>
+  </div>
+</div>
+
+<!-- Problem -->
+<section id="problem">
+  <div class="section-inner">
+    <div class="section-label fade-in">PROBLEM</div>
+    <h2 class="fade-in">こんな不安、ありませんか？</h2>
+    <p class="section-desc fade-in">不動産は「買ってから気づく」が致命的。プロの目で事前にリスクを潰します。</p>
+    <div class="pain-grid">
+      <div class="pain-item fade-in">
+        <div class="pain-icon">⚠️</div>
+        <div><div class="pain-title">再建築できない物件だった</div><div class="pain-desc">接道義務を満たしておらず、建替え不可。売却も困難になるケースが実在します。</div></div>
+      </div>
+      <div class="pain-item fade-in">
+        <div class="pain-icon">🚧</div>
+        <div><div class="pain-title">都市計画道路にかかっていた</div><div class="pain-desc">将来の道路拡張で物件が収用されるリスク。購入前に確認が必要な情報です。</div></div>
+      </div>
+      <div class="pain-item fade-in">
+        <div class="pain-icon">📋</div>
+        <div><div class="pain-title">用途制限で使えなかった</div><div class="pain-desc">「店舗を開こうとしたら用途地域で禁止されていた」というケースは珍しくありません。</div></div>
+      </div>
+      <div class="pain-item fade-in">
+        <div class="pain-icon">🏚️</div>
+        <div><div class="pain-title">現地に行けず実態がわからない</div><div class="pain-desc">遠方の物件・多忙な投資家様に代わって現地確認・写真撮影を代行します。</div></div>
+      </div>
+    </div>
+    <div class="warning-box fade-in">
+      <strong>重要：</strong>重要事項説明書には記載されていないリスクが存在します。「書いてなかったから大丈夫」は通用しません。プロの調査で見えないリスクを可視化することが、資産を守る第一歩です。
+    </div>
+  </div>
+</section>
+
+<!-- Services -->
+<section id="service" style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div class="section-inner">
+    <div class="section-label fade-in">SERVICE</div>
+    <h2 class="fade-in">調査サービス一覧</h2>
+    <p class="section-desc fade-in">法的リスクの可視化から現地確認まで、購入判断に必要な情報をワンストップで提供します。</p>
+    <div class="services-grid">
+      <div class="service-card fade-in">
+        <div class="service-num">01</div>
+        <div class="service-title">用途地域・法令制限の調査</div>
+        <div class="service-desc">建てられる建物の種類・制限を明確化。防火地域・高度地区・景観規制なども確認します。</div>
+      </div>
+      <div class="service-card fade-in">
+        <div class="service-num">02</div>
+        <div class="service-title">建ぺい率・容積率の確認</div>
+        <div class="service-desc">ボリュームチェック。どれくらいの建物が建てられるか数値で明示します。</div>
+      </div>
+      <div class="service-card fade-in">
+        <div class="service-num">03</div>
+        <div class="service-title">再建築可否の判定</div>
+        <div class="service-desc">接道義務・道路種別を確認。再建築不可物件の見極めは投資判断の核心です。</div>
+      </div>
+      <div class="service-card fade-in">
+        <div class="service-num">04</div>
+        <div class="service-title">都市計画道路・計画線の確認</div>
+        <div class="service-desc">将来的な収用・建築制限リスクを把握。長期保有の投資家様に特に重要な調査です。</div>
+      </div>
+      <div class="service-card fade-in">
+        <div class="service-num">05</div>
+        <div class="service-title">役所調査代行</div>
+        <div class="service-desc">都市計画課・建築指導課などでの直接ヒアリング。平日の役所調査も最短当日着手。</div>
+      </div>
+      <div class="service-card fade-in">
+        <div class="service-num">06</div>
+        <div class="service-title">現地調査・写真納品</div>
+        <div class="service-desc">境界杭・クラック・越境・近隣環境を確認。現場写真100枚超＋調査報告書で納品。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Strengths -->
+<section id="strength">
+  <div class="section-inner">
+    <div class="section-label fade-in">WHY SEIKA</div>
+    <h2 class="fade-in">青歌が選ばれる理由</h2>
+    <p class="section-desc fade-in">資格・知識・スピード。3つが揃った調査代行は珍しい。</p>
+    <div class="strength-list">
+      <div class="strength-item fade-in">
+        <div class="strength-num">01</div>
+        <div class="strength-body">
+          <div class="strength-title">宅建士資格保有による法的信頼性</div>
+          <div class="strength-desc">単なる「代行業者」ではなく、宅建士として法的知識を持った専門家が調査します。接道義務・用途地域・法令制限の解釈まで含めた質の高い調査が可能です。</div>
+          <span class="strength-tag">宅地建物取引士</span>
+        </div>
+      </div>
+      <div class="strength-item fade-in">
+        <div class="strength-num">02</div>
+        <div class="strength-body">
+          <div class="strength-title">18歳のフットワークで最短当日着手</div>
+          <div class="strength-desc">平日でも動ける機動力が強みです。「この物件、明日契約なんだけど」という急ぎの案件にも対応。役所調査・現地調査を当日〜翌日で完了します。</div>
+          <span class="strength-tag">スピード対応</span>
+        </div>
+      </div>
+      <div class="strength-item fade-in">
+        <div class="strength-num">03</div>
+        <div class="strength-body">
+          <div class="strength-title">投資目線での調査・リスク判定</div>
+          <div class="strength-desc">「調査しました」だけでなく、「この物件は買いか・見送りか」という投資判断に直結する情報をレポートに落とし込みます。事実確認 ＋ リスク可視化がセットです。</div>
+          <span class="strength-tag">投資経験あり</span>
+        </div>
+      </div>
+      <div class="strength-item fade-in">
+        <div class="strength-num">04</div>
+        <div class="strength-body">
+          <div class="strength-title">SNS発信による透明性</div>
+          <div class="strength-desc">X（旧Twitter）で調査の裏側・学びを日々発信中。何をやっている人間かが見えるから安心して依頼できます。実績・事例も随時公開しています。</div>
+          <span class="strength-tag">@seika_takkennsi</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing -->
+<section id="pricing" style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div class="section-inner">
+    <div class="section-label fade-in">PRICING</div>
+    <h2 class="fade-in">料金プラン</h2>
+    <p class="section-desc fade-in">まずは簡易調査でリスクを確認。本格調査が必要な場合は資料をご請求ください。</p>
+    <div class="pricing-grid">
+      <div class="price-card fade-in">
+        <div class="price-type">SIMPLE</div>
+        <div class="price-name">簡易リスク診断</div>
+        <div class="price-amount">¥9,800<span>〜（税込）</span></div>
+        <div class="price-note">書類調査のみ・最短即日納品</div>
+        <ul class="price-features">
+          <li>用途地域・法令制限の確認</li>
+          <li>建ぺい率・容積率チェック</li>
+          <li>再建築可否の初期判定</li>
+          <li>リスク判定レポート（PDF）</li>
+        </ul>
+        <a href="#contact" class="price-cta price-cta-secondary">相談・申込はこちら</a>
+      </div>
+      <div class="price-card featured fade-in">
+        <div class="price-featured-badge">RECOMMENDED</div>
+        <div class="price-type">FULL</div>
+        <div class="price-name">本格物件調査</div>
+        <div class="price-amount">料金は<span>資料請求</span></div>
+        <div class="price-note">物件規模・調査内容により個別見積</div>
+        <ul class="price-features">
+          <li>簡易診断の全項目</li>
+          <li>役所調査代行（都市計画課等）</li>
+          <li>現地調査・写真100枚超</li>
+          <li>都市計画道路・計画線の確認</li>
+          <li>詳細調査報告書（PDF）</li>
+          <li>調査後の質疑応答対応</li>
+        </ul>
+        <a href="#contact" class="price-cta price-cta-primary">資料を請求する</a>
+      </div>
+      <div class="price-card fade-in">
+        <div class="price-type">MONTHLY</div>
+        <div class="price-name">業者様向け顧問プラン</div>
+        <div class="price-amount">月額<span>応相談</span></div>
+        <div class="price-note">不動産会社・投資法人様向け</div>
+        <ul class="price-features">
+          <li>月間案件数に応じた定額制</li>
+          <li>優先対応・スピード納品</li>
+          <li>調査コストの外注化が可能</li>
+          <li>継続的なパートナーシップ</li>
+        </ul>
+        <a href="#contact" class="price-cta price-cta-secondary">詳細を問い合わせる</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Flow -->
+<section id="flow">
+  <div class="section-inner">
+    <div class="section-label fade-in">FLOW</div>
+    <h2 class="fade-in">ご依頼の流れ</h2>
+    <p class="section-desc fade-in">フォームから送信後、24時間以内にご連絡します。</p>
+    <div class="flow-steps">
+      <div class="flow-step fade-in">
+        <div class="flow-step-num">1</div>
+        <div class="flow-step-body">
+          <div class="flow-step-title">お問い合わせフォームから送信</div>
+          <div class="flow-step-desc">物件の住所・調査内容・希望納期をご記入ください。匿名・仮住所でのご相談もOKです。</div>
+        </div>
+      </div>
+      <div class="flow-step fade-in">
+        <div class="flow-step-num">2</div>
+        <div class="flow-step-body">
+          <div class="flow-step-title">内容確認・お見積り（24時間以内）</div>
+          <div class="flow-step-desc">調査内容を確認の上、メールまたはDMにてお見積りをお送りします。急ぎの案件はその旨お知らせください。</div>
+        </div>
+      </div>
+      <div class="flow-step fade-in">
+        <div class="flow-step-num">3</div>
+        <div class="flow-step-body">
+          <div class="flow-step-title">着手・調査実施</div>
+          <div class="flow-step-desc">ご承認後、最短当日から調査を開始します。役所調査・現地調査の日程はご連絡しながら進めます。</div>
+        </div>
+      </div>
+      <div class="flow-step fade-in">
+        <div class="flow-step-num">4</div>
+        <div class="flow-step-body">
+          <div class="flow-step-title">調査レポート納品</div>
+          <div class="flow-step-desc">PDF形式で調査報告書を納品。写真・図面・リスク判定をまとめた形でお渡しします。納品後の質問にも対応します。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section" id="contact">
+  <div class="cta-inner">
+    <div class="section-label fade-in" style="justify-content:center;">CONTACT</div>
+    <h2 class="fade-in">まずは無料で相談する</h2>
+    <p class="fade-in">調査が必要かどうかわからない場合も、お気軽にご相談ください。物件の住所と気になる点を教えていただければ、必要な調査内容をご提案します。</p>
+    <a href="https://forms.gle/XXXXXXXXXXXXXXXXX" target="_blank" class="btn-primary fade-in" style="display:inline-block;margin-bottom:16px;">
+      お問い合わせフォームへ →
+    </a>
+    <div style="font-size:12px;color:var(--muted);" class="fade-in">
+      またはX（旧Twitter）のDMへ：
+      <a href="https://x.com/seika_takkennsi" target="_blank" style="color:var(--gold);text-decoration:none;">@seika_takkennsi</a>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-logo">青歌</div>
+  <div class="footer-text">
+    物件リスクチェック｜不動産調査代行<br>
+    23区・横浜エリア対応｜18歳宅建士
+  </div>
+  <div class="footer-links">
+    <a href="https://x.com/seika_takkennsi" target="_blank" class="footer-link">X（旧Twitter）</a>
+    <a href="#service" class="footer-link">サービス</a>
+    <a href="#pricing" class="footer-link">料金</a>
+    <a href="#contact" class="footer-link">お問い合わせ</a>
+  </div>
+  <div style="font-size:10px;color:#444;margin-top:16px;">© 2026 青歌 All rights reserved.</div>
+</footer>
+
+<script>
+// Scroll animations
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting) e.target.classList.add('visible');
+  });
+},{threshold:0.1});
+document.querySelectorAll('.fade-in').forEach(el=>observer.observe(el));
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    e.preventDefault();
+    const target=document.querySelector(a.getAttribute('href'));
+    if(target) target.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+});
+</script>
+</body>
+</html>
