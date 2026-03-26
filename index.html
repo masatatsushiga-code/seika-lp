@@ -2,590 +2,866 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>青歌｜物件リスクチェック・不動産調査代行</title>
-<meta name="description" content="18歳宅建士が23区・横浜エリアの物件調査を代行。接道リスク・再建築不可・用途制限を徹底チェック。買った後に後悔しないために。">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600;700&family=Shippori+Mincho:wght@400;500;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
 <style>
-:root{
-  --bg:#0e0e0c;
-  --bg2:#161614;
-  --bg3:#1e1e1b;
-  --border:#2e2e2a;
-  --text:#f0ede6;
-  --muted:#8a8880;
-  --gold:#c9a84c;
-  --gold2:#e8c96a;
-  --cream:#f5f0e8;
-  --red:#c94c4c;
-  --serif:'Noto Serif JP',serif;
-  --sans:'Noto Sans JP',sans-serif;
-}
-*{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
-body{font-family:var(--sans);background:var(--bg);color:var(--text);overflow-x:hidden;}
+  :root {
+    --ink: #0c0c0e;
+    --paper: #f5f0e8;
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --gold-dim: rgba(201,168,76,0.12);
+    --dim: #1a1a1e;
+    --mid: #2e2e35;
+    --text: #e8e2d6;
+    --text-muted: #8a8070;
+    --serif: 'Noto Serif JP', serif;
+    --mono: 'DM Mono', monospace;
+    --mincho: 'Shippori Mincho', serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--ink); color: var(--text); font-family: var(--serif); overflow-x: hidden; line-height: 1.8; }
+  body::before {
+    content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 9999; opacity: 0.35;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  }
 
-/* Nav */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:100;
-  background:rgba(14,14,12,.92);backdrop-filter:blur(12px);
-  border-bottom:1px solid var(--border);
-  padding:14px 24px;
-  display:flex;align-items:center;justify-content:space-between;
-}
-.nav-logo{font-family:var(--serif);font-size:18px;font-weight:700;color:var(--gold);letter-spacing:.08em;}
-.nav-sub{font-size:10px;color:var(--muted);letter-spacing:.1em;margin-top:1px;}
-.nav-cta{
-  background:var(--gold);color:#0e0e0c;
-  padding:8px 20px;border-radius:2px;
-  font-size:12px;font-weight:700;letter-spacing:.06em;
-  text-decoration:none;transition:opacity .2s;
-  white-space:nowrap;
-}
-.nav-cta:hover{opacity:.85;}
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.25rem 4rem;
+    background: rgba(12,12,14,0.88); backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+    transition: padding 0.3s;
+  }
+  nav.scrolled { padding: 0.85rem 4rem; }
+  .nav-logo { font-family: var(--mincho); font-size: 1.2rem; color: var(--gold); letter-spacing: 0.15em; text-decoration: none; }
+  .nav-sub { font-size: 0.62rem; color: var(--text-muted); letter-spacing: 0.1em; margin-left: 0.5rem; }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a { font-size: 0.74rem; color: var(--text-muted); text-decoration: none; letter-spacing: 0.12em; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta { color: var(--ink) !important; background: var(--gold); padding: 0.5rem 1.3rem !important; transition: background 0.2s !important; }
+  .nav-cta:hover { background: var(--gold-light) !important; }
 
-/* Hero */
-.hero{
-  min-height:100vh;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:100px 24px 60px;
-  position:relative;overflow:hidden;
-  text-align:center;
-}
-.hero-grid{
-  position:absolute;inset:0;
-  background-image:
-    linear-gradient(rgba(201,168,76,.04) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(201,168,76,.04) 1px,transparent 1px);
-  background-size:60px 60px;
-}
-.hero-vignette{
-  position:absolute;inset:0;
-  background:radial-gradient(ellipse at center,transparent 40%,var(--bg) 80%);
-}
-.hero-content{position:relative;z-index:1;max-width:760px;}
-.hero-badge{
-  display:inline-flex;align-items:center;gap:8px;
-  border:1px solid var(--gold);color:var(--gold);
-  padding:5px 14px;border-radius:2px;
-  font-size:11px;letter-spacing:.12em;margin-bottom:28px;
-}
-.hero-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pulse 2s infinite;}
-@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
-h1{
-  font-family:var(--serif);
-  font-size:clamp(28px,5vw,52px);
-  font-weight:700;line-height:1.35;
-  letter-spacing:.04em;
-  margin-bottom:20px;
-}
-h1 em{font-style:normal;color:var(--gold);}
-.hero-sub{
-  font-size:clamp(13px,2vw,16px);
-  color:var(--muted);line-height:1.9;
-  margin-bottom:36px;max-width:540px;margin-left:auto;margin-right:auto;
-}
-.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
-.btn-primary{
-  background:var(--gold);color:#0e0e0c;
-  padding:14px 32px;border-radius:2px;
-  font-size:14px;font-weight:700;letter-spacing:.06em;
-  text-decoration:none;transition:all .2s;border:none;cursor:pointer;
-}
-.btn-primary:hover{background:var(--gold2);}
-.btn-secondary{
-  background:transparent;color:var(--text);
-  padding:14px 32px;border-radius:2px;border:1px solid var(--border);
-  font-size:14px;letter-spacing:.04em;
-  text-decoration:none;transition:all .2s;
-}
-.btn-secondary:hover{border-color:var(--gold);color:var(--gold);}
+  /* HERO */
+  #hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; position: relative; overflow: hidden; }
+  .hero-left { display: flex; flex-direction: column; justify-content: center; padding: 10rem 4rem 6rem 5rem; position: relative; z-index: 2; }
+  .hero-label { display: inline-flex; align-items: center; gap: 0.7rem; font-family: var(--mono); font-size: 0.63rem; color: var(--gold); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 2.5rem; }
+  .hero-label::before { content: ''; display: block; width: 2rem; height: 1px; background: var(--gold); }
+  .hero-h1 { font-family: var(--mincho); font-size: clamp(2.2rem, 4vw, 3.5rem); font-weight: 400; line-height: 1.45; color: var(--paper); margin-bottom: 1.8rem; }
+  .hero-h1 em { font-style: normal; color: var(--gold); display: block; }
+  .hero-lead { font-size: 0.87rem; color: var(--text-muted); line-height: 1.95; margin-bottom: 3rem; max-width: 34rem; }
+  .hero-lead strong { color: var(--text); font-weight: 500; }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary { display: inline-block; padding: 0.9rem 2.2rem; background: var(--gold); color: var(--ink); font-family: var(--mincho); font-size: 0.82rem; letter-spacing: 0.12em; text-decoration: none; transition: background 0.2s, transform 0.15s; }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+  .btn-outline { display: inline-block; padding: 0.9rem 2.2rem; border: 1px solid rgba(201,168,76,0.4); color: var(--gold); font-family: var(--mincho); font-size: 0.82rem; letter-spacing: 0.12em; text-decoration: none; transition: all 0.2s; }
+  .btn-outline:hover { border-color: var(--gold); background: var(--gold-dim); }
 
-/* Stats bar */
-.stats-bar{
-  background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);
-  padding:20px 24px;
-  display:flex;justify-content:center;gap:0;flex-wrap:wrap;
-}
-.stat-item{
-  text-align:center;padding:0 32px;
-  border-right:1px solid var(--border);
-}
-.stat-item:last-child{border-right:none;}
-.stat-num{font-family:var(--serif);font-size:28px;font-weight:700;color:var(--gold);line-height:1;}
-.stat-label{font-size:11px;color:var(--muted);margin-top:4px;letter-spacing:.06em;}
+  /* COUNT-UP STATS */
+  .hero-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin-top: 4rem; border-top: 1px solid rgba(201,168,76,0.15); padding-top: 2.5rem; }
+  .stat-item { padding-right: 1.5rem; }
+  .stat-item + .stat-item { padding-left: 1.5rem; border-left: 1px solid rgba(255,255,255,0.06); }
+  .stat-num { font-family: var(--mono); font-size: 1.6rem; color: var(--gold); font-weight: 300; letter-spacing: 0.05em; display: block; margin-bottom: 0.3rem; }
+  .stat-label { font-size: 0.67rem; color: var(--text-muted); letter-spacing: 0.1em; display: block; }
+  .countup { display: inline; }
 
-/* Section */
-section{padding:80px 24px;}
-.section-inner{max-width:900px;margin:0 auto;}
-.section-label{
-  font-size:10px;letter-spacing:.16em;color:var(--gold);
-  margin-bottom:10px;display:flex;align-items:center;gap:8px;
-}
-.section-label::before{content:'';width:24px;height:1px;background:var(--gold);}
-h2{
-  font-family:var(--serif);font-size:clamp(22px,3.5vw,36px);
-  font-weight:700;letter-spacing:.04em;line-height:1.4;margin-bottom:14px;
-}
-.section-desc{font-size:14px;color:var(--muted);line-height:1.9;margin-bottom:48px;}
+  /* HERO RIGHT */
+  .hero-right { position: relative; overflow: hidden; }
+  .hero-right::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, #1a1408 0%, #0c0c0e 50%, #08100a 100%); }
+  .hero-grid-bg { position: absolute; inset: 0; background-image: linear-gradient(rgba(201,168,76,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,0.035) 1px, transparent 1px); background-size: 48px 48px; }
+  .hero-orb { position: absolute; width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%, -50%); animation: pulse 4s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.8} 50%{transform:translate(-50%,-50%) scale(1.08);opacity:1} }
+  .hero-center-kanji { font-family: var(--mincho); font-size: 9rem; color: rgba(201,168,76,0.035); position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); user-select: none; white-space: nowrap; }
+  .hero-floats { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+  .float-card { position: absolute; background: rgba(22,22,26,0.92); border: 1px solid rgba(201,168,76,0.18); padding: 1.2rem 1.6rem; backdrop-filter: blur(8px); animation: floatUp 6s ease-in-out infinite; cursor: pointer; transition: border-color 0.2s, box-shadow 0.2s; text-decoration: none; display: block; }
+  .float-card:hover { border-color: rgba(201,168,76,0.45); box-shadow: 0 8px 32px rgba(201,168,76,0.08); }
+  .float-card:nth-child(1){top:22%;left:8%;animation-delay:0s}
+  .float-card:nth-child(2){top:48%;right:8%;animation-delay:2s}
+  .float-card:nth-child(3){bottom:22%;left:18%;animation-delay:4s}
+  @keyframes floatUp{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+  .fc-label { font-family: var(--mono); font-size: 0.56rem; color: var(--text-muted); letter-spacing: 0.15em; margin-bottom: 0.4rem; display: block; }
+  .fc-value { font-family: var(--mincho); font-size: 0.88rem; color: var(--gold); }
 
-/* Pain points */
-.pain-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-bottom:32px;}
-.pain-item{
-  background:var(--bg2);border:1px solid var(--border);
-  border-radius:4px;padding:20px;
-  display:flex;gap:14px;align-items:flex-start;
-}
-.pain-icon{font-size:20px;flex-shrink:0;margin-top:2px;}
-.pain-title{font-size:13px;font-weight:700;margin-bottom:4px;}
-.pain-desc{font-size:12px;color:var(--muted);line-height:1.6;}
+  /* SECTIONS */
+  section { padding: 7rem 5rem; }
+  .section-eyebrow { display: flex; align-items: center; gap: 1rem; font-family: var(--mono); font-size: 0.61rem; color: var(--gold); letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 1.2rem; }
+  .section-eyebrow::after { content: ''; display: block; flex: 1; max-width: 3rem; height: 1px; background: var(--gold); opacity: 0.5; }
+  .section-title { font-family: var(--mincho); font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 400; color: var(--paper); line-height: 1.4; margin-bottom: 1rem; }
+  .section-sub { font-size: 0.85rem; color: var(--text-muted); max-width: 42rem; line-height: 1.9; margin-bottom: 4rem; }
 
-/* Services */
-.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;}
-.service-card{
-  background:var(--bg2);border:1px solid var(--border);
-  border-radius:4px;padding:24px;
-  transition:border-color .2s;
-  position:relative;overflow:hidden;
-}
-.service-card:hover{border-color:var(--gold);}
-.service-card::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:var(--gold);transform:scaleX(0);transform-origin:left;
-  transition:transform .3s;
-}
-.service-card:hover::before{transform:scaleX(1);}
-.service-num{
-  font-family:var(--serif);font-size:11px;color:var(--gold);
-  letter-spacing:.12em;margin-bottom:10px;
-}
-.service-title{font-size:15px;font-weight:700;margin-bottom:8px;}
-.service-desc{font-size:12px;color:var(--muted);line-height:1.7;}
+  /* PROBLEM */
+  #problem { background: var(--dim); position: relative; overflow: hidden; }
+  #problem::before { content: 'RISK'; position: absolute; right: -2rem; top: 50%; transform: translateY(-50%) rotate(90deg); font-family: var(--mono); font-size: 10rem; color: rgba(255,255,255,0.018); letter-spacing: 0.3em; pointer-events: none; }
+  .problem-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1.5px; background: rgba(201,168,76,0.07); margin-bottom: 3rem; }
+  .problem-card { background: var(--dim); padding: 2.5rem; transition: background 0.2s; cursor: default; }
+  .problem-card:hover { background: rgba(201,168,76,0.04); }
+  .problem-icon { width: 2.2rem; height: 2.2rem; margin-bottom: 1.2rem; display: block; opacity: 0.85; }
+  .problem-title { font-family: var(--mincho); font-size: 1rem; color: var(--paper); margin-bottom: 0.6rem; letter-spacing: 0.04em; }
+  .problem-desc { font-size: 0.79rem; color: var(--text-muted); line-height: 1.85; }
+  .problem-warning { border: 1px solid rgba(201,168,76,0.25); padding: 1.8rem 2.2rem; background: rgba(201,168,76,0.04); position: relative; }
+  .problem-warning::before { content: ''; position: absolute; left: -1px; top: 0; bottom: 0; width: 4px; background: var(--gold); }
+  .problem-warning p { font-size: 0.82rem; color: var(--text-muted); line-height: 1.9; }
+  .problem-warning strong { color: var(--gold); font-weight: 500; }
 
-/* Strengths */
-.strength-list{display:flex;flex-direction:column;gap:0;}
-.strength-item{
-  display:flex;gap:20px;padding:24px 0;
-  border-bottom:1px solid var(--border);
-  align-items:flex-start;
-}
-.strength-item:last-child{border-bottom:none;}
-.strength-num{
-  font-family:var(--serif);font-size:32px;font-weight:700;
-  color:rgba(201,168,76,.2);flex-shrink:0;width:48px;line-height:1;
-}
-.strength-body{}
-.strength-title{font-size:15px;font-weight:700;margin-bottom:6px;}
-.strength-desc{font-size:13px;color:var(--muted);line-height:1.8;}
-.strength-tag{
-  display:inline-block;font-size:10px;padding:2px 8px;
-  border:1px solid var(--gold);color:var(--gold);
-  border-radius:2px;margin-top:8px;letter-spacing:.06em;
-}
+  /* SERVICE */
+  #service { background: var(--ink); }
+  .service-list { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: rgba(255,255,255,0.04); }
+  .service-item { background: var(--ink); padding: 2.5rem; position: relative; overflow: hidden; transition: background 0.25s; cursor: default; }
+  .service-item:hover { background: #111115; }
+  .service-item::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform 0.3s ease; }
+  .service-item:hover::after { transform: scaleX(1); }
+  .service-num { font-family: var(--mono); font-size: 0.58rem; color: var(--gold); letter-spacing: 0.2em; margin-bottom: 1.2rem; display: block; opacity: 0.7; }
+  .service-name { font-family: var(--mincho); font-size: 1.03rem; color: var(--paper); margin-bottom: 0.8rem; line-height: 1.5; }
+  .service-desc { font-size: 0.78rem; color: var(--text-muted); line-height: 1.85; }
 
-/* Pricing */
-.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;}
-.price-card{
-  background:var(--bg2);border:1px solid var(--border);
-  border-radius:4px;padding:28px;
-}
-.price-card.featured{border-color:var(--gold);position:relative;}
-.price-featured-badge{
-  position:absolute;top:-1px;right:20px;
-  background:var(--gold);color:#0e0e0c;
-  font-size:10px;font-weight:700;letter-spacing:.08em;
-  padding:3px 12px;border-radius:0 0 4px 4px;
-}
-.price-type{font-size:11px;letter-spacing:.1em;color:var(--muted);margin-bottom:8px;}
-.price-name{font-family:var(--serif);font-size:18px;font-weight:700;margin-bottom:14px;}
-.price-amount{
-  font-family:var(--serif);font-size:32px;font-weight:700;
-  color:var(--gold);margin-bottom:4px;
-}
-.price-amount span{font-size:14px;color:var(--muted);font-family:var(--sans);}
-.price-note{font-size:11px;color:var(--muted);margin-bottom:20px;}
-.price-features{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:24px;}
-.price-features li{
-  font-size:12px;color:var(--muted);
-  display:flex;align-items:flex-start;gap:8px;line-height:1.5;
-}
-.price-features li::before{content:'―';color:var(--gold);flex-shrink:0;}
-.price-cta{
-  display:block;text-align:center;padding:11px;
-  border-radius:2px;font-size:13px;font-weight:700;
-  letter-spacing:.04em;text-decoration:none;transition:all .2s;
-}
-.price-cta-primary{background:var(--gold);color:#0e0e0c;}
-.price-cta-primary:hover{background:var(--gold2);}
-.price-cta-secondary{border:1px solid var(--border);color:var(--text);}
-.price-cta-secondary:hover{border-color:var(--gold);color:var(--gold);}
+  /* WHY */
+  #why { background: var(--dim); }
+  .why-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 2.5rem; }
+  .why-item { display: flex; gap: 2rem; padding: 2.5rem; border: 1px solid rgba(255,255,255,0.05); transition: border-color 0.2s, transform 0.2s; cursor: default; }
+  .why-item:hover { border-color: rgba(201,168,76,0.2); transform: translateY(-2px); }
+  .why-num { font-family: var(--mono); font-size: 2.5rem; color: rgba(201,168,76,0.14); font-weight: 300; line-height: 1; flex-shrink: 0; width: 4rem; }
+  .why-tag { display: inline-block; font-family: var(--mono); font-size: 0.57rem; color: var(--gold); letter-spacing: 0.15em; border: 1px solid rgba(201,168,76,0.3); padding: 0.15rem 0.6rem; margin-bottom: 0.8rem; }
+  .why-title { font-family: var(--mincho); font-size: 1.03rem; color: var(--paper); margin-bottom: 0.7rem; line-height: 1.5; }
+  .why-desc { font-size: 0.78rem; color: var(--text-muted); line-height: 1.85; }
 
-/* Flow */
-.flow-steps{display:flex;flex-direction:column;gap:0;}
-.flow-step{
-  display:flex;gap:20px;padding:24px 0;
-  border-bottom:1px solid var(--border);
-}
-.flow-step:last-child{border-bottom:none;}
-.flow-step-num{
-  width:40px;height:40px;border-radius:50%;
-  border:1px solid var(--gold);
-  display:flex;align-items:center;justify-content:center;
-  font-family:var(--serif);font-size:14px;color:var(--gold);
-  flex-shrink:0;
-}
-.flow-step-body{flex:1;padding-top:8px;}
-.flow-step-title{font-size:14px;font-weight:700;margin-bottom:4px;}
-.flow-step-desc{font-size:12px;color:var(--muted);line-height:1.7;}
+  /* PRICING */
+  #pricing { background: var(--ink); }
+  .pricing-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; align-items: start; }
+  .price-card { border: 1px solid rgba(255,255,255,0.07); padding: 2.5rem; position: relative; transition: border-color 0.25s, transform 0.2s; }
+  .price-card:hover { transform: translateY(-3px); border-color: rgba(201,168,76,0.2); }
+  .price-card.featured { border-color: rgba(201,168,76,0.35); background: rgba(201,168,76,0.025); }
+  .price-badge { position: absolute; top: -1px; left: 50%; transform: translateX(-50%); background: var(--gold); color: var(--ink); font-family: var(--mono); font-size: 0.57rem; letter-spacing: 0.15em; padding: 0.25rem 1rem; white-space: nowrap; }
+  .price-plan { font-family: var(--mono); font-size: 0.61rem; color: var(--text-muted); letter-spacing: 0.2em; margin-bottom: 0.6rem; display: block; }
+  .price-name { font-family: var(--mincho); font-size: 1.3rem; color: var(--paper); margin-bottom: 1.5rem; }
+  .price-amount { font-family: var(--mono); font-size: 2rem; color: var(--gold); font-weight: 300; margin-bottom: 0.3rem; display: block; }
+  .price-note { font-size: 0.72rem; color: var(--text-muted); margin-bottom: 2rem; display: block; }
+  .price-divider { height: 1px; background: rgba(255,255,255,0.055); margin: 1.5rem 0; }
+  .price-features { list-style: none; margin-bottom: 2.5rem; }
+  .price-features li { font-size: 0.78rem; color: var(--text-muted); padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.04); display: flex; align-items: flex-start; gap: 0.7rem; line-height: 1.5; }
+  .price-features li::before { content: '—'; color: var(--gold); opacity: 0.6; flex-shrink: 0; }
 
-/* CTA section */
-.cta-section{
-  background:var(--bg2);border-top:1px solid var(--border);
-  border-bottom:1px solid var(--border);
-  padding:80px 24px;text-align:center;
-}
-.cta-inner{max-width:600px;margin:0 auto;}
-.cta-section h2{margin-bottom:16px;}
-.cta-section p{font-size:14px;color:var(--muted);line-height:1.9;margin-bottom:32px;}
+  /* FLOW */
+  #flow { background: var(--dim); }
+  .flow-steps { display: grid; grid-template-columns: repeat(4,1fr); position: relative; }
+  .flow-steps::before { content: ''; position: absolute; top: 2.2rem; left: 3rem; right: 3rem; height: 1px; background: linear-gradient(90deg, var(--gold) 0%, rgba(201,168,76,0.15) 100%); z-index: 0; }
+  .flow-step { padding: 0 1.5rem; position: relative; z-index: 1; }
+  .flow-num { width: 4.5rem; height: 4.5rem; border: 1px solid rgba(201,168,76,0.3); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 0.68rem; color: var(--gold); background: var(--dim); margin-bottom: 1.5rem; transition: background 0.2s, border-color 0.2s; }
+  .flow-step:hover .flow-num { background: var(--gold-dim); border-color: rgba(201,168,76,0.6); }
+  .flow-title { font-family: var(--mincho); font-size: 0.88rem; color: var(--paper); margin-bottom: 0.7rem; line-height: 1.5; }
+  .flow-desc { font-size: 0.75rem; color: var(--text-muted); line-height: 1.85; }
 
-/* Warning box */
-.warning-box{
-  background:rgba(201,76,76,.08);border:1px solid rgba(201,76,76,.3);
-  border-radius:4px;padding:16px 20px;margin:32px 0;
-  font-size:13px;color:#e88080;line-height:1.7;
-}
-.warning-box strong{color:var(--red);}
+  /* FAQ ACCORDION */
+  #faq { background: var(--ink); }
+  .faq-list { max-width: 56rem; }
+  .faq-item { border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .faq-q {
+    width: 100%; background: none; border: none; color: var(--text); font-family: var(--mincho); font-size: 0.95rem; text-align: left; padding: 1.6rem 0; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 1rem; letter-spacing: 0.04em; transition: color 0.2s;
+  }
+  .faq-q:hover { color: var(--gold); }
+  .faq-icon { font-family: var(--mono); font-size: 1.1rem; color: var(--gold); width: 1.5rem; flex-shrink: 0; text-align: center; transition: transform 0.3s; }
+  .faq-item.open .faq-icon { transform: rotate(45deg); }
+  .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1); }
+  .faq-a-inner { padding: 0 0 1.8rem 0; font-size: 0.82rem; color: var(--text-muted); line-height: 1.95; }
+  .faq-a-inner strong { color: var(--text); font-weight: 500; }
 
-/* Footer */
-footer{
-  background:var(--bg2);border-top:1px solid var(--border);
-  padding:32px 24px;text-align:center;
-}
-.footer-logo{font-family:var(--serif);font-size:20px;color:var(--gold);margin-bottom:8px;}
-.footer-text{font-size:11px;color:var(--muted);line-height:1.8;}
-.footer-links{display:flex;gap:20px;justify-content:center;margin-top:16px;flex-wrap:wrap;}
-.footer-link{font-size:11px;color:var(--muted);text-decoration:none;}
-.footer-link:hover{color:var(--gold);}
+  /* CONTACT FORM */
+  #contact { background: var(--dim); position: relative; overflow: hidden; }
+  #contact::before { content: '青歌'; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-family: var(--mincho); font-size: 18rem; color: rgba(201,168,76,0.02); pointer-events: none; white-space: nowrap; }
+  .contact-inner { position: relative; z-index: 1; max-width: 52rem; }
+  .contact-form { margin-top: 3rem; display: flex; flex-direction: column; gap: 1.2rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+  .form-label { font-family: var(--mono); font-size: 0.62rem; color: var(--text-muted); letter-spacing: 0.15em; }
+  .form-label span { color: var(--gold); margin-left: 0.3rem; }
+  .form-input, .form-select, .form-textarea {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); color: var(--text); font-family: var(--serif); font-size: 0.85rem; padding: 0.85rem 1rem; width: 100%; outline: none; transition: border-color 0.2s, background 0.2s; -webkit-appearance: none;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: rgba(201,168,76,0.45); background: rgba(201,168,76,0.04); }
+  .form-input::placeholder, .form-textarea::placeholder { color: rgba(255,255,255,0.2); }
+  .form-select { cursor: pointer; }
+  .form-select option { background: #1a1a1e; }
+  .form-textarea { resize: vertical; min-height: 120px; }
+  .form-submit-row { display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; }
+  .form-note { font-size: 0.72rem; color: var(--text-muted); line-height: 1.7; }
+  .form-success { display: none; align-items: center; gap: 0.8rem; padding: 1rem 1.5rem; background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.25); font-family: var(--mincho); font-size: 0.9rem; color: var(--gold); }
+  .contact-alt { margin-top: 3rem; padding-top: 2.5rem; border-top: 1px solid rgba(255,255,255,0.06); }
+  .contact-alt p { font-family: var(--mono); font-size: 0.68rem; color: var(--text-muted); letter-spacing: 0.12em; margin-bottom: 0.8rem; }
+  .contact-alt a { font-family: var(--mono); font-size: 0.78rem; color: var(--gold); text-decoration: none; letter-spacing: 0.1em; border-bottom: 1px solid rgba(201,168,76,0.3); padding-bottom: 0.1rem; transition: border-color 0.2s; }
+  .contact-alt a:hover { border-color: var(--gold); }
 
-/* Animations */
-.fade-in{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;}
-.fade-in.visible{opacity:1;transform:translateY(0);}
+  /* FOOTER */
+  footer { background: #080809; border-top: 1px solid rgba(255,255,255,0.04); padding: 3rem 5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
+  .footer-brand { font-family: var(--mincho); font-size: 1.1rem; color: var(--gold); letter-spacing: 0.15em; }
+  .footer-brand p { font-family: var(--serif); font-size: 0.67rem; color: var(--text-muted); letter-spacing: 0.05em; margin-top: 0.3rem; }
+  .footer-links { display: flex; gap: 2rem; list-style: none; flex-wrap: wrap; }
+  .footer-links a { font-size: 0.7rem; color: var(--text-muted); text-decoration: none; letter-spacing: 0.1em; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-copy { font-family: var(--mono); font-size: 0.61rem; color: rgba(255,255,255,0.18); letter-spacing: 0.1em; }
 
-/* Responsive */
-@media(max-width:600px){
-  .stat-item{padding:12px 16px;flex:1 1 45%;}
-  .strength-item{flex-direction:column;gap:8px;}
-  .strength-num{font-size:20px;width:auto;}
-  nav{padding:12px 16px;}
-  .nav-sub{display:none;}
-}
+  /* REVEAL */
+  .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.65s ease, transform 0.65s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* AREA BADGE */
+  .area-badge { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--mono); font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.15em; border: 1px solid rgba(255,255,255,0.08); padding: 0.5rem 1.2rem; margin-bottom: 2.5rem; }
+  .area-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gold); animation: blink 1.8s ease-in-out infinite; }
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:0.25}}
+
+  /* CASES */
+  #cases { background: var(--ink); }
+  .cases-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5px; background: rgba(201,168,76,0.1); }
+  .case-card { background: var(--ink); padding: 2.4rem; position: relative; overflow: hidden; transition: background 0.2s; cursor: default; }
+  .case-card:hover { background: #0f0f12; }
+  .case-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--gold), transparent); opacity: 0; transition: opacity 0.3s; }
+  .case-card:hover::before { opacity: 1; }
+  .case-area { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--mono); font-size: 0.58rem; color: var(--gold); letter-spacing: 0.18em; text-transform: uppercase; border: 1px solid rgba(201,168,76,0.25); padding: 0.2rem 0.7rem; margin-bottom: 1rem; }
+  .case-type { font-family: var(--mincho); font-size: 0.95rem; color: var(--paper); margin-bottom: 0.5rem; line-height: 1.5; }
+  .case-risk { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--mono); font-size: 0.6rem; color: #e05c4b; letter-spacing: 0.1em; background: rgba(224,92,75,0.08); border: 1px solid rgba(224,92,75,0.2); padding: 0.25rem 0.7rem; margin-bottom: 1.2rem; }
+  .case-divider { height: 1px; background: rgba(255,255,255,0.05); margin: 1.2rem 0; }
+  .case-findings { list-style: none; margin-bottom: 1.4rem; }
+  .case-findings li { font-size: 0.76rem; color: var(--text-muted); padding: 0.45rem 0; border-bottom: 1px solid rgba(255,255,255,0.04); display: flex; align-items: flex-start; gap: 0.6rem; line-height: 1.65; }
+  .case-findings li::before { content: '—'; color: rgba(201,168,76,0.5); flex-shrink: 0; }
+  .case-result { font-family: var(--mono); font-size: 0.62rem; color: var(--text-muted); letter-spacing: 0.08em; line-height: 1.7; padding: 0.9rem 1.1rem; background: rgba(255,255,255,0.02); border-left: 2px solid rgba(201,168,76,0.3); }
+  .case-result strong { color: var(--gold); font-weight: 400; display: block; margin-bottom: 0.3rem; letter-spacing: 0.12em; font-size: 0.58rem; text-transform: uppercase; }
+  .case-source { font-family: var(--mono); font-size: 0.56rem; color: rgba(255,255,255,0.2); margin-top: 1rem; letter-spacing: 0.06em; }
+
+  /* RESPONSIVE */
+  @media(max-width:900px){
+    nav{padding:1rem 1.5rem} .nav-links{display:none}
+    section{padding:5rem 1.6rem}
+    #hero{grid-template-columns:1fr} .hero-left{padding:8rem 1.6rem 4rem} .hero-right{display:none}
+    .hero-stats{grid-template-columns:repeat(2,1fr);gap:1.5rem}
+    .cases-grid { grid-template-columns: 1fr; }
+    .problem-grid,.why-grid,.pricing-grid{grid-template-columns:1fr}
+    .service-list{grid-template-columns:1fr}
+    .flow-steps{grid-template-columns:1fr 1fr;gap:2rem} .flow-steps::before{display:none}
+    .form-row{grid-template-columns:1fr}
+    footer{flex-direction:column;text-align:center;padding:2rem 1.6rem}
+  }
+
+  /* ADVISOR BANNER */
+  .advisor-banner {
+    margin-top: 2.5rem;
+    border: 1px solid rgba(201,168,76,0.2);
+    background: rgba(201,168,76,0.02);
+    padding: 3rem;
+  }
+  .advisor-inner {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 3rem;
+    align-items: start;
+  }
+  .advisor-title {
+    font-family: var(--mincho);
+    font-size: 1.5rem;
+    color: var(--paper);
+    margin: 0.5rem 0 1rem;
+  }
+  .advisor-amount {
+    font-family: var(--mono);
+    font-size: 2.2rem;
+    color: var(--gold);
+    font-weight: 300;
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+  .advisor-per {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-left: 0.2rem;
+  }
+  .advisor-note {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    display: block;
+  }
+  .advisor-right .price-features {
+    margin-bottom: 1.5rem;
+  }
+  .advisor-right .price-compare {
+    margin-bottom: 1.5rem;
+  }
+  .price-features li.highlight {
+    color: var(--text);
+  }
+  .price-features li.highlight::before {
+    opacity: 1;
+  }
+  .price-compare {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    line-height: 1.85;
+    padding: 1rem 1.2rem;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .price-compare strong {
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.4rem;
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    font-family: var(--mono);
+  }
+  @media(max-width:900px) {
+    .advisor-inner { grid-template-columns: 1fr; gap: 1.5rem; }
+    .advisor-banner { padding: 2rem 1.6rem; }
+  }
 </style>
 </head>
 <body>
 
-<!-- Nav -->
-<nav>
-  <div>
-    <div class="nav-logo">青歌</div>
-    <div class="nav-sub">物件リスクチェック｜宅建</div>
-  </div>
-  <a href="#contact" class="nav-cta">無料相談はこちら</a>
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">青歌<span class="nav-sub">SEIKA</span></a>
+  <ul class="nav-links">
+    <li><a href="#problem">課題</a></li>
+    <li><a href="#service">サービス</a></li>
+    <li><a href="#cases">事例</a></li>
+    <li><a href="#pricing">料金</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#contact" class="nav-cta">無料相談</a></li>
+  </ul>
 </nav>
 
-<!-- Hero -->
-<div class="hero">
-  <div class="hero-grid"></div>
-  <div class="hero-vignette"></div>
-  <div class="hero-content fade-in">
-    <div class="hero-badge">23区・横浜エリア対応｜最短当日着手</div>
-    <h1>買った後に<br>後悔しないために、<br><em>プロの目</em>を入れる。</h1>
-    <p class="hero-sub">
-      投資家様の「時間」と「安心」を買う実務代行サービス。<br>
-      18歳宅建士がフットワーク軽く現地・役所調査を代行。<br>
-      重説ではなく、<strong>事実確認の代行</strong>です。
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left">
+    <span class="hero-label">物件リスクチェック ｜ 23区・横浜対応</span>
+    <h1 class="hero-h1">
+      100件超の調査で<br>見つけてきた、<br>
+      <em>重説に載らないリスク。</em>
+    </h1>
+    <p class="hero-lead">
+      不動産会社で100件超の物件調査を経験した宅建士が、<br>
+      役所ヒアリング・現地確認・法令チェックを代行。<br>
+      重要事項説明書では見えないリスクを、<strong>買う前に可視化</strong>します。
     </p>
     <div class="hero-btns">
       <a href="#contact" class="btn-primary">無料で相談する</a>
-      <a href="#service" class="btn-secondary">サービスを見る</a>
+      <a href="#service" class="btn-outline">サービスを見る</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <span class="stat-num">23区</span>
+        <span class="stat-label">＋横浜対応</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">当日〜</span>
+        <span class="stat-label">着手スピード</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num"><span class="countup" data-target="100">0</span>件超</span>
+        <span class="stat-label">調査実績</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">宅建士</span>
+        <span class="stat-label">保有資格</span>
+      </div>
     </div>
   </div>
-</div>
+  <div class="hero-right">
+    <div class="hero-grid-bg"></div>
+    <div class="hero-orb"></div>
+    <div class="hero-center-kanji">調査</div>
+    <div class="hero-floats">
+      <a href="report-nakano.html" class="float-card"><span class="fc-label">JUDGMENT</span><span class="fc-value">再建築可否 — 判定済</span></a>
+      <a href="report-sagamihara.html" class="float-card"><span class="fc-label">STATUS</span><span class="fc-value">役所調査 — 完了</span></a>
+      <a href="report-ikebukuro.html" class="float-card"><span class="fc-label">RISK</span><span class="fc-value">都計道路 — 要注意</span></a>
+    </div>
+  </div>
+</section>
 
-<!-- Stats -->
-<div class="stats-bar">
-  <div class="stat-item">
-    <div class="stat-num">23区<span style="font-size:16px;">＋</span>横浜</div>
-    <div class="stat-label">対応エリア</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-num">当日〜</div>
-    <div class="stat-label">着手スピード</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-num">100枚<span style="font-size:16px;">超</span></div>
-    <div class="stat-label">現場写真納品</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-num">宅建士</div>
-    <div class="stat-label">保有資格</div>
-  </div>
-</div>
-
-<!-- Problem -->
+<!-- PROBLEM -->
 <section id="problem">
-  <div class="section-inner">
-    <div class="section-label fade-in">PROBLEM</div>
-    <h2 class="fade-in">こんな不安、ありませんか？</h2>
-    <p class="section-desc fade-in">不動産は「買ってから気づく」が致命的。プロの目で事前にリスクを潰します。</p>
-    <div class="pain-grid">
-      <div class="pain-item fade-in">
-        <div class="pain-icon">⚠️</div>
-        <div><div class="pain-title">再建築できない物件だった</div><div class="pain-desc">接道義務を満たしておらず、建替え不可。売却も困難になるケースが実在します。</div></div>
-      </div>
-      <div class="pain-item fade-in">
-        <div class="pain-icon">🚧</div>
-        <div><div class="pain-title">都市計画道路にかかっていた</div><div class="pain-desc">将来の道路拡張で物件が収用されるリスク。購入前に確認が必要な情報です。</div></div>
-      </div>
-      <div class="pain-item fade-in">
-        <div class="pain-icon">📋</div>
-        <div><div class="pain-title">用途制限で使えなかった</div><div class="pain-desc">「店舗を開こうとしたら用途地域で禁止されていた」というケースは珍しくありません。</div></div>
-      </div>
-      <div class="pain-item fade-in">
-        <div class="pain-icon">🏚️</div>
-        <div><div class="pain-title">現地に行けず実態がわからない</div><div class="pain-desc">遠方の物件・多忙な投資家様に代わって現地確認・写真撮影を代行します。</div></div>
-      </div>
+  <div class="section-eyebrow">Problem</div>
+  <h2 class="section-title">こんな不安、ありませんか？</h2>
+  <p class="section-sub">不動産は「買ってから気づく」が致命的。プロの目で事前にリスクを潰します。</p>
+  <div class="problem-grid reveal">
+    <div class="problem-card">
+      <svg class="problem-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="28" width="28" height="2" stroke="#C9A84C" stroke-width="1.5"/><path d="M18 6 L32 28 H4 Z" stroke="#C9A84C" stroke-width="1.5" fill="none" stroke-linejoin="round"/><line x1="18" y1="14" x2="18" y2="21" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/><circle cx="18" cy="24" r="1" fill="#C9A84C"/></svg>
+      <p class="problem-title">再建築できない物件だった</p><p class="problem-desc">接道義務を満たしておらず、建替え不可。売却も困難になるケースが実在します。</p>
     </div>
-    <div class="warning-box fade-in">
-      <strong>重要：</strong>重要事項説明書には記載されていないリスクが存在します。「書いてなかったから大丈夫」は通用しません。プロの調査で見えないリスクを可視化することが、資産を守る第一歩です。
+    <div class="problem-card">
+      <svg class="problem-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="16" width="30" height="4" stroke="#C9A84C" stroke-width="1.5" fill="none"/><line x1="3" y1="20" x2="3" y2="28" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/><line x1="33" y1="20" x2="33" y2="28" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/><line x1="8" y1="8" x2="28" y2="8" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="3 3"/><line x1="18" y1="8" x2="18" y2="16" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <p class="problem-title">都市計画道路にかかっていた</p><p class="problem-desc">将来の道路拡張で物件が収用されるリスク。購入前に確認が必要な情報です。</p>
     </div>
+    <div class="problem-card">
+      <svg class="problem-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="7" y="4" width="22" height="28" rx="1" stroke="#C9A84C" stroke-width="1.5" fill="none"/><line x1="12" y1="12" x2="24" y2="12" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/><line x1="12" y1="17" x2="24" y2="17" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/><line x1="12" y1="22" x2="19" y2="22" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <p class="problem-title">用途制限で使えなかった</p><p class="problem-desc">「店舗を開こうとしたら用途地域で禁止されていた」というケースは珍しくありません。</p>
+    </div>
+    <div class="problem-card">
+      <svg class="problem-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 6 L30 14 V30 H6 V14 Z" stroke="#C9A84C" stroke-width="1.5" fill="none" stroke-linejoin="round"/><path d="M13 30 V22 H23 V30" stroke="#C9A84C" stroke-width="1.5" fill="none" stroke-linejoin="round"/><line x1="18" y1="6" x2="18" y2="3" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/><circle cx="26" cy="22" r="5" fill="#0c0c0e" stroke="#C9A84C" stroke-width="1.5"/><line x1="26" y1="20" x2="26" y2="22" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/><circle cx="26" cy="24" r="0.8" fill="#C9A84C"/></svg>
+      <p class="problem-title">現地に行けず実態がわからない</p><p class="problem-desc">遠方の物件・多忙な投資家様に代わって現地確認・写真撮影を代行します。</p>
+    </div>
+  </div>
+  <div class="problem-warning reveal">
+    <p><strong>重要：</strong>重要事項説明書には記載されていないリスクが存在します。「書いてなかったから大丈夫」は通用しません。プロの調査で見えないリスクを可視化することが、資産を守る第一歩です。</p>
   </div>
 </section>
 
-<!-- Services -->
-<section id="service" style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
-  <div class="section-inner">
-    <div class="section-label fade-in">SERVICE</div>
-    <h2 class="fade-in">調査サービス一覧</h2>
-    <p class="section-desc fade-in">法的リスクの可視化から現地確認まで、購入判断に必要な情報をワンストップで提供します。</p>
-    <div class="services-grid">
-      <div class="service-card fade-in">
-        <div class="service-num">01</div>
-        <div class="service-title">用途地域・法令制限の調査</div>
-        <div class="service-desc">建てられる建物の種類・制限を明確化。防火地域・高度地区・景観規制なども確認します。</div>
-      </div>
-      <div class="service-card fade-in">
-        <div class="service-num">02</div>
-        <div class="service-title">建ぺい率・容積率の確認</div>
-        <div class="service-desc">ボリュームチェック。どれくらいの建物が建てられるか数値で明示します。</div>
-      </div>
-      <div class="service-card fade-in">
-        <div class="service-num">03</div>
-        <div class="service-title">再建築可否の判定</div>
-        <div class="service-desc">接道義務・道路種別を確認。再建築不可物件の見極めは投資判断の核心です。</div>
-      </div>
-      <div class="service-card fade-in">
-        <div class="service-num">04</div>
-        <div class="service-title">都市計画道路・計画線の確認</div>
-        <div class="service-desc">将来的な収用・建築制限リスクを把握。長期保有の投資家様に特に重要な調査です。</div>
-      </div>
-      <div class="service-card fade-in">
-        <div class="service-num">05</div>
-        <div class="service-title">役所調査代行</div>
-        <div class="service-desc">都市計画課・建築指導課などでの直接ヒアリング。平日の役所調査も最短当日着手。</div>
-      </div>
-      <div class="service-card fade-in">
-        <div class="service-num">06</div>
-        <div class="service-title">現地調査・写真納品</div>
-        <div class="service-desc">境界杭・クラック・越境・近隣環境を確認。現場写真100枚超＋調査報告書で納品。</div>
-      </div>
-    </div>
+<!-- SERVICE -->
+<section id="service">
+  <div class="section-eyebrow">Service</div>
+  <h2 class="section-title">調査サービス一覧</h2>
+  <p class="section-sub">法的リスクの可視化から現地確認まで、購入判断に必要な情報をワンストップで提供します。</p>
+  <div class="service-list reveal">
+    <div class="service-item"><span class="service-num">01</span><p class="service-name">用途地域・法令制限の調査</p><p class="service-desc">建てられる建物の種類・制限を明確化。防火地域・高度地区・景観規制なども確認します。</p></div>
+    <div class="service-item"><span class="service-num">02</span><p class="service-name">建ぺい率・容積率の確認</p><p class="service-desc">ボリュームチェック。どれくらいの建物が建てられるか数値で明示します。</p></div>
+    <div class="service-item"><span class="service-num">03</span><p class="service-name">再建築可否の判定</p><p class="service-desc">接道義務・道路種別を確認。再建築不可物件の見極めは投資判断の核心です。</p></div>
+    <div class="service-item"><span class="service-num">04</span><p class="service-name">都市計画道路・計画線の確認</p><p class="service-desc">将来的な収用・建築制限リスクを把握。長期保有の投資家様に特に重要な調査です。</p></div>
+    <div class="service-item"><span class="service-num">05</span><p class="service-name">役所調査代行</p><p class="service-desc">都市計画課・建築指導課などでの直接ヒアリング。平日の役所調査も最短当日着手。</p></div>
+    <div class="service-item"><span class="service-num">06</span><p class="service-name">現地調査・写真納品</p><p class="service-desc">境界杭・クラック・越境・近隣環境を確認。現場写真100枚超＋調査報告書で納品。</p></div>
   </div>
 </section>
 
-<!-- Strengths -->
-<section id="strength">
-  <div class="section-inner">
-    <div class="section-label fade-in">WHY SEIKA</div>
-    <h2 class="fade-in">青歌が選ばれる理由</h2>
-    <p class="section-desc fade-in">資格・知識・スピード。3つが揃った調査代行は珍しい。</p>
-    <div class="strength-list">
-      <div class="strength-item fade-in">
-        <div class="strength-num">01</div>
-        <div class="strength-body">
-          <div class="strength-title">宅建士資格保有による法的信頼性</div>
-          <div class="strength-desc">単なる「代行業者」ではなく、宅建士として法的知識を持った専門家が調査します。接道義務・用途地域・法令制限の解釈まで含めた質の高い調査が可能です。</div>
-          <span class="strength-tag">宅地建物取引士</span>
-        </div>
-      </div>
-      <div class="strength-item fade-in">
-        <div class="strength-num">02</div>
-        <div class="strength-body">
-          <div class="strength-title">18歳のフットワークで最短当日着手</div>
-          <div class="strength-desc">平日でも動ける機動力が強みです。「この物件、明日契約なんだけど」という急ぎの案件にも対応。役所調査・現地調査を当日〜翌日で完了します。</div>
-          <span class="strength-tag">スピード対応</span>
-        </div>
-      </div>
-      <div class="strength-item fade-in">
-        <div class="strength-num">03</div>
-        <div class="strength-body">
-          <div class="strength-title">投資目線での調査・リスク判定</div>
-          <div class="strength-desc">「調査しました」だけでなく、「この物件は買いか・見送りか」という投資判断に直結する情報をレポートに落とし込みます。事実確認 ＋ リスク可視化がセットです。</div>
-          <span class="strength-tag">投資経験あり</span>
-        </div>
-      </div>
-      <div class="strength-item fade-in">
-        <div class="strength-num">04</div>
-        <div class="strength-body">
-          <div class="strength-title">SNS発信による透明性</div>
-          <div class="strength-desc">X（旧Twitter）で調査の裏側・学びを日々発信中。何をやっている人間かが見えるから安心して依頼できます。実績・事例も随時公開しています。</div>
-          <span class="strength-tag">@seika_takkennsi</span>
-        </div>
-      </div>
-    </div>
+<!-- WHY -->
+<section id="why">
+  <div class="section-eyebrow">Why Seika</div>
+  <h2 class="section-title">青歌が選ばれる理由</h2>
+  <p class="section-sub">資格・知識・スピード。3つが揃った調査代行は珍しい。</p>
+  <div class="why-grid reveal">
+    <div class="why-item"><div class="why-num">01</div><div class="why-content"><span class="why-tag">宅地建物取引士</span><p class="why-title">不動産会社で100件超の調査を経験</p><p class="why-desc">重要事項説明書の作成に必要な法令調査と同等以上の品質で調査を実施。接道義務・用途地域・都市計画道路・崖条例まで、一般的な「調査代行」とは精度が違います。</p></div></div>
+    <div class="why-item"><div class="why-num">02</div><div class="why-content"><span class="why-tag">スピード対応</span><p class="why-title">18歳のフットワークで最短当日着手</p><p class="why-desc">平日でも動ける機動力が強みです。「この物件、明日契約なんだけど」という急ぎの案件にも対応。役所調査・現地調査を当日〜翌日で完了します。</p></div></div>
+    <div class="why-item"><div class="why-num">03</div><div class="why-content"><span class="why-tag">リスク可視化</span><p class="why-title">「調査して終わり」ではなく判断材料を整理</p><p class="why-desc">事実を並べるだけでなく、再建築の可否・後退義務の有無・将来リスクの程度まで整理してレポートに落とし込みます。買うかどうかの判断はお客様に委ねますが、判断に必要な情報は全部揃えます。</p></div></div>
+    <div class="why-item"><div class="why-num">04</div><div class="why-content"><span class="why-tag">@seika_takkennsi</span><p class="why-title">SNS発信による透明性</p><p class="why-desc">X（旧Twitter）で調査の裏側・学びを日々発信中。何をやっている人間かが見えるから安心して依頼できます。実績・事例も随時公開しています。</p></div></div>
   </div>
 </section>
 
-<!-- Pricing -->
-<section id="pricing" style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
-  <div class="section-inner">
-    <div class="section-label fade-in">PRICING</div>
-    <h2 class="fade-in">料金プラン</h2>
-    <p class="section-desc fade-in">まずは簡易調査でリスクを確認。本格調査が必要な場合は資料をご請求ください。</p>
-    <div class="pricing-grid">
-      <div class="price-card fade-in">
-        <div class="price-type">SIMPLE</div>
-        <div class="price-name">簡易リスク診断</div>
-        <div class="price-amount">¥9,800<span>〜（税込）</span></div>
-        <div class="price-note">書類調査のみ・最短即日納品</div>
+<!-- CASES -->
+<section id="cases">
+  <div class="section-eyebrow">Cases</div>
+  <h2 class="section-title">調査事例</h2>
+  <p class="section-sub">実際に行った調査の一部をご紹介します。「書類上は問題なさそう」な物件でも、現地・役所調査で重大なリスクが発覚するケースは少なくありません。</p>
+  <div class="cases-grid reveal">
+
+    <div class="case-card">
+      <span class="case-area">中野区</span>
+      <p class="case-type">戸建</p>
+      <span class="case-risk">⚠ 無接道・再建築不可</span>
+      <ul class="case-findings">
+        <li>物件と道路の間に水路が並行して走っており、接道義務を満たしていない無接道物件であることが判明</li>
+        <li>現状では再建築不可。ただし区が一定の要件を満たした際に水路を道路として管理する措置がとられれば、再建築が可能になる可能性がある</li>
+        <li>中野区役所の過去の道路相談記録（令和5年時点）を確認し、本内容を裏付け</li>
+      </ul>
+      <div class="case-divider"></div>
+      <div class="case-result">
+        <strong>調査結果</strong>
+        現状での再建築不可を確認。将来的な再建築可能性の条件を区役所建築課へのヒアリングで明確化し、購入判断に必要な情報を提供。
+      </div>
+      <p class="case-source">調査先：中野区役所 建築課</p>
+    </div>
+
+    <div class="case-card">
+      <span class="case-area">相模原市</span>
+      <p class="case-type">戸建</p>
+      <span class="case-risk">⚠ 擁壁リスク・崖条例該当</span>
+      <ul class="case-findings">
+        <li>建築確認・検査済証はあるが、開発時にまとめて申請されたものとみられ、12枚の記載事項証明のうちどれが本物件のものか特定不可</li>
+        <li>北側擁壁は開発当時グラウンドとして使用されていた土地に造られたもので、宅地目的で建築されたものではないと判断</li>
+        <li>崖条例に該当する可能性があり、再建築時には安全措置が必要。擁壁の安全性確認が前提条件となる</li>
+      </ul>
+      <div class="case-divider"></div>
+      <div class="case-result">
+        <strong>調査結果</strong>
+        擁壁に問題がなければ再建築はおそらく可能だが、詳細は現地検査が必要。複数課（建築審査課・開発審査課）へのヒアリングで判断材料を整理。
+      </div>
+      <p class="case-source">調査先：相模原市役所 建築審査課・開発審査課</p>
+    </div>
+
+    <div class="case-card">
+      <span class="case-area">上池袋</span>
+      <p class="case-type">戸建</p>
+      <span class="case-risk">⚠ 内務省所有地・都市計画道路</span>
+      <ul class="case-findings">
+        <li>公図上の南側筆（2392-3）の所有者が内務省となっており、現況は歩道。道路として機能しているが法的位置づけの確認が必要</li>
+        <li>南側に官民境界から4.5mの都市計画道路の計画線あり。将来的な後退リスクが存在</li>
+        <li>東側にも都市計画道路あり（境石から2.8m後退）。ただし計画決定が古く、建築当時からRC造は計画線上に建築不可だったため物件本体への影響は限定的と判断</li>
+      </ul>
+      <div class="case-divider"></div>
+      <div class="case-result">
+        <strong>調査結果</strong>
+        複数の都市計画道路リスクを可視化。内務省所有地の法的扱いを含め、将来の資産価値に影響する情報を整理して提供。
+      </div>
+      <p class="case-source">調査先：東京都庁 都市整備局 都市計画課</p>
+    </div>
+
+    <div class="case-card">
+      <span class="case-area">大田区</span>
+      <p class="case-type">区分マンション</p>
+      <span class="case-risk">⚠ 鉄道事業者協議・三重リスク</span>
+      <ul class="case-findings">
+        <li>再建築時に鉄道事業者（保線課）との施工協議が必要であることを直接問い合わせで確認</li>
+        <li>東側都市計画道路の後退幅2.8m・隅切り部分は南東両道路の延長線交点から5m後退と判明</li>
+        <li>北東側私道は位置指定道路として図上4m以上確保されているためSB不要。ただし現況が4m未満の場合は関係権利者と協議が必要</li>
+      </ul>
+      <div class="case-divider"></div>
+      <div class="case-result">
+        <strong>調査結果</strong>
+        鉄道事業者・都庁・市役所の三方面に問い合わせを実施。再建築時のコスト・手続きリスクを購入前に可視化。
+      </div>
+      <p class="case-source">調査先：鉄道事業者 保線課 / 東京都庁 都市計画課 / 川崎市役所 建築指導課</p>
+    </div>
+
+    <div class="case-card">
+      <span class="case-area">川崎市</span>
+      <p class="case-type">戸建</p>
+      <span class="case-risk">確認事項 私道・位置指定道路</span>
+      <ul class="case-findings">
+        <li>北東側私道が位置指定道路として申請されており、図面上の幅員4m以上を確認</li>
+        <li>SB（セットバック）は不要と判断。ただし現況が4m未満の場合は関係権利者全員との協議のうえ幅員4mを確保する必要がある</li>
+      </ul>
+      <div class="case-divider"></div>
+      <div class="case-result">
+        <strong>調査結果</strong>
+        セットバック不要を確認。現況確認の重要性と、万が一の場合の対応手順を明示して納品。
+      </div>
+      <p class="case-source">調査先：川崎市役所 建築指導課</p>
+    </div>
+
+    <div class="case-card">
+      <span class="case-area">横浜市 弘明寺</span>
+      <p class="case-type">戸建</p>
+      <span class="case-risk">確認事項 否道路・接道判定</span>
+      <ul class="case-findings">
+        <li>南側道路は道路法上の道路だが、建築基準法上は「否道路」と判定。概要書に「隣地境界線」と記載（基準法上の道路であれば「道路境界」と記載される）</li>
+        <li>否道路であるため、セットバック義務は発生しないことを確認</li>
+      </ul>
+      <div class="case-divider"></div>
+      <div class="case-result">
+        <strong>調査結果</strong>
+        道路法と建築基準法の区別が鍵となる案件。概要書の記載から否道路を判定し、SB不要を確認。法的根拠を明示して納品。
+      </div>
+      <p class="case-source">調査先：横浜市役所 建築指導課</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="section-eyebrow">Pricing</div>
+  <h2 class="section-title">料金プラン</h2>
+  <p class="section-sub">案件の大半を占める役所調査は¥19,800。すべて税別・一律料金で、追加料金の心配はありません。</p>
+
+  <div class="pricing-grid reveal">
+
+    <!-- 簡易調査 -->
+    <div class="price-card">
+      <span class="price-plan">SIMPLE</span>
+      <p class="price-name">簡易調査</p>
+      <span class="price-amount">¥9,800</span>
+      <span class="price-note">税別 ｜ 書類調査のみ・最短即日納品</span>
+      <div class="price-divider"></div>
+      <ul class="price-features">
+        <li>用途地域・法令制限の確認</li>
+        <li>建ぺい率・容積率チェック</li>
+        <li>再建築可否の初期判定</li>
+        <li>ハザードマップ確認</li>
+        <li>リスク判定レポート（PDF）</li>
+      </ul>
+      <a href="#contact" class="btn-outline" style="width:100%;text-align:center;display:block;">相談・申込はこちら</a>
+    </div>
+
+    <!-- 標準調査（主力） -->
+    <div class="price-card featured">
+      <span class="price-badge">RECOMMENDED</span>
+      <span class="price-plan">STANDARD</span>
+      <p class="price-name">標準調査</p>
+      <span class="price-amount">¥19,800</span>
+      <span class="price-note">税別 ｜ 役所ヒアリング込み</span>
+      <div class="price-divider"></div>
+      <ul class="price-features">
+        <li class="highlight">簡易調査の全項目を含む</li>
+        <li>役所調査代行（都市計画課・建築指導課等）</li>
+        <li>都市計画道路・計画線の確認</li>
+        <li>再建築可否の正式判定</li>
+        <li>リスク総合評価レポート（PDF）</li>
+        <li>調査後の質疑応答対応</li>
+      </ul>
+      <a href="#contact" class="btn-primary" style="width:100%;text-align:center;display:block;">この内容で相談する</a>
+    </div>
+
+    <!-- フル調査 -->
+    <div class="price-card">
+      <span class="price-plan">FULL</span>
+      <p class="price-name">フル調査</p>
+      <span class="price-amount">¥29,800</span>
+      <span class="price-note">税別 ｜ 現地調査・写真納品込み</span>
+      <div class="price-divider"></div>
+      <ul class="price-features">
+        <li class="highlight">標準調査の全項目を含む</li>
+        <li>現地調査・写真100枚超</li>
+        <li>境界杭・クラック・越境の確認</li>
+        <li>近隣環境の現地確認</li>
+        <li>詳細調査報告書（PDF）</li>
+        <li>調査後の質疑応答対応</li>
+      </ul>
+      <a href="#contact" class="btn-outline" style="width:100%;text-align:center;display:block;">この内容で相談する</a>
+    </div>
+
+  </div>
+
+  <!-- 顧問プラン（別枠バナー） -->
+  <div class="advisor-banner reveal">
+    <div class="advisor-inner">
+      <div class="advisor-left">
+        <span class="price-plan">ADVISOR</span>
+        <p class="advisor-title">顧問契約</p>
+        <span class="advisor-amount">¥49,800<span class="advisor-per">/月</span></span>
+        <span class="advisor-note">税別 ｜ 不動産会社・投資法人向け</span>
+      </div>
+      <div class="advisor-right">
         <ul class="price-features">
-          <li>用途地域・法令制限の確認</li>
-          <li>建ぺい率・容積率チェック</li>
-          <li>再建築可否の初期判定</li>
-          <li>リスク判定レポート（PDF）</li>
+          <li class="highlight">月2件まで標準調査を実施</li>
+          <li class="highlight">LINE相談 無制限</li>
+          <li>優先対応・当日着手保証</li>
+          <li>追加1件あたり ¥19,800（通常より¥10,000引き）</li>
         </ul>
-        <a href="#contact" class="price-cta price-cta-secondary">相談・申込はこちら</a>
-      </div>
-      <div class="price-card featured fade-in">
-        <div class="price-featured-badge">RECOMMENDED</div>
-        <div class="price-type">FULL</div>
-        <div class="price-name">本格物件調査</div>
-        <div class="price-amount">料金は<span>資料請求</span></div>
-        <div class="price-note">物件規模・調査内容により個別見積</div>
-        <ul class="price-features">
-          <li>簡易診断の全項目</li>
-          <li>役所調査代行（都市計画課等）</li>
-          <li>現地調査・写真100枚超</li>
-          <li>都市計画道路・計画線の確認</li>
-          <li>詳細調査報告書（PDF）</li>
-          <li>調査後の質疑応答対応</li>
-        </ul>
-        <a href="#contact" class="price-cta price-cta-primary">資料を請求する</a>
-      </div>
-      <div class="price-card fade-in">
-        <div class="price-type">MONTHLY</div>
-        <div class="price-name">業者様向け顧問プラン</div>
-        <div class="price-amount">月額<span>応相談</span></div>
-        <div class="price-note">不動産会社・投資法人様向け</div>
-        <ul class="price-features">
-          <li>月間案件数に応じた定額制</li>
-          <li>優先対応・スピード納品</li>
-          <li>調査コストの外注化が可能</li>
-          <li>継続的なパートナーシップ</li>
-        </ul>
-        <a href="#contact" class="price-cta price-cta-secondary">詳細を問い合わせる</a>
+        <div class="price-compare">
+          <strong>単発比較</strong>
+          標準調査2件＝¥39,600 → 顧問なら¥49,800でLINE相談無制限付き。月3件以上で確実におトク。
+        </div>
+        <a href="#contact" class="btn-outline">顧問プランを相談する</a>
       </div>
     </div>
   </div>
+
+  <!-- 別途実費 -->
+  <div class="problem-warning reveal" style="margin-top:2.5rem;">
+    <p><strong>別途実費について：</strong>公図・登記簿謄本等の書類取得費、台帳記載事項証明書等の各種証明書発行手数料は別途ご負担をお願いします。交通費は23区・横浜エリアの調査料金に含みます。</p>
+  </div>
+
 </section>
 
-<!-- Flow -->
+<!-- FLOW -->
 <section id="flow">
-  <div class="section-inner">
-    <div class="section-label fade-in">FLOW</div>
-    <h2 class="fade-in">ご依頼の流れ</h2>
-    <p class="section-desc fade-in">フォームから送信後、24時間以内にご連絡します。</p>
-    <div class="flow-steps">
-      <div class="flow-step fade-in">
-        <div class="flow-step-num">1</div>
-        <div class="flow-step-body">
-          <div class="flow-step-title">お問い合わせフォームから送信</div>
-          <div class="flow-step-desc">物件の住所・調査内容・希望納期をご記入ください。匿名・仮住所でのご相談もOKです。</div>
-        </div>
-      </div>
-      <div class="flow-step fade-in">
-        <div class="flow-step-num">2</div>
-        <div class="flow-step-body">
-          <div class="flow-step-title">内容確認・お見積り（24時間以内）</div>
-          <div class="flow-step-desc">調査内容を確認の上、メールまたはDMにてお見積りをお送りします。急ぎの案件はその旨お知らせください。</div>
-        </div>
-      </div>
-      <div class="flow-step fade-in">
-        <div class="flow-step-num">3</div>
-        <div class="flow-step-body">
-          <div class="flow-step-title">着手・調査実施</div>
-          <div class="flow-step-desc">ご承認後、最短当日から調査を開始します。役所調査・現地調査の日程はご連絡しながら進めます。</div>
-        </div>
-      </div>
-      <div class="flow-step fade-in">
-        <div class="flow-step-num">4</div>
-        <div class="flow-step-body">
-          <div class="flow-step-title">調査レポート納品</div>
-          <div class="flow-step-desc">PDF形式で調査報告書を納品。写真・図面・リスク判定をまとめた形でお渡しします。納品後の質問にも対応します。</div>
-        </div>
-      </div>
+  <div class="section-eyebrow">Flow</div>
+  <h2 class="section-title">ご依頼の流れ</h2>
+  <p class="section-sub">フォームから送信後、24時間以内にご連絡します。</p>
+  <div class="flow-steps reveal">
+    <div class="flow-step"><div class="flow-num">01</div><p class="flow-title">お問い合わせフォームから送信</p><p class="flow-desc">物件の住所・調査内容・希望納期をご記入ください。匿名・仮住所でのご相談もOKです。</p></div>
+    <div class="flow-step"><div class="flow-num">02</div><p class="flow-title">内容確認・お見積り</p><p class="flow-desc">調査内容を確認の上、24時間以内にお見積りをお送りします。急ぎの案件はその旨お知らせください。</p></div>
+    <div class="flow-step"><div class="flow-num">03</div><p class="flow-title">着手・調査実施</p><p class="flow-desc">ご承認後、最短当日から調査を開始します。役所・現地の日程はご連絡しながら進めます。</p></div>
+    <div class="flow-step"><div class="flow-num">04</div><p class="flow-title">調査レポート納品</p><p class="flow-desc">PDF形式で調査報告書を納品。写真・図面・リスク判定をまとめた形でお渡しします。</p></div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="section-eyebrow">FAQ</div>
+  <h2 class="section-title">よくある質問</h2>
+  <p class="section-sub">ご不明な点はお気軽にお問い合わせください。</p>
+  <div class="faq-list reveal">
+    <div class="faq-item">
+      <button class="faq-q">18歳でも本当に信頼できますか？<span class="faq-icon">+</span></button>
+      <div class="faq-a"><div class="faq-a-inner"><strong>宅地建物取引士の資格を保有</strong>しており、不動産会社での実務で100件超の物件調査を経験しています。重要事項説明書に必要な法令調査と同等以上の品質で作業しており、年齢ではなく実績と資格で判断いただければと思います。調査事例はLPの「事例」セクションで公開しています。</div></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">対応エリアはどこですか？<span class="faq-icon">+</span></button>
+      <div class="faq-a"><div class="faq-a-inner"><strong>東京23区・横浜エリア</strong>を基本対応エリアとしています。その他のエリアについてはご相談ください。書類調査（用途地域・法令制限・容積率等）については、遠方の物件でもオンラインで対応可能な場合があります。</div></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">納期はどのくらいかかりますか？<span class="faq-icon">+</span></button>
+      <div class="faq-a"><div class="faq-a-inner">書類調査のみの簡易診断は<strong>最短即日〜翌日納品</strong>が可能です。役所調査・現地調査を含む本格調査は、内容によって2〜5営業日程度を目安にしています。「明日契約なんだけど」という急ぎ案件もまずはご相談ください。</div></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">重要事項説明書との違いは何ですか？<span class="faq-icon">+</span></button>
+      <div class="faq-a"><div class="faq-a-inner">重要事項説明書は法律で定められた<strong>最低限の事項を記載するもの</strong>です。都市計画道路の詳細・越境・境界トラブル・近隣の状況など、重説に書かれないリスクが実在します。青歌の調査は「買い手の目線で潰すべきリスクを全部洗い出す」ことを目的としています。</div></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">相談だけでも大丈夫ですか？<span class="faq-icon">+</span></button>
+      <div class="faq-a"><div class="faq-a-inner">もちろんです。<strong>「調査が必要かどうかわからない」という段階でのご相談も歓迎します。</strong>物件の住所と気になる点を教えていただければ、必要な調査内容をご提案します。相談自体は無料です。</div></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">調査に必要な書類はありますか？<span class="faq-icon">+</span></button>
+      <div class="faq-a"><div class="faq-a-inner">台帳記載事項証明書など、<strong>自治体窓口での取得が必要な書類については、委任状をご記入いただく場合があります。</strong>委任状の書式はこちらでご用意しますので、ご安心ください。その他に必要な書類がある場合は、調査内容の確認後に個別にご案内します。</div></div>
     </div>
   </div>
 </section>
 
-<!-- CTA -->
-<div class="cta-section" id="contact">
-  <div class="cta-inner">
-    <div class="section-label fade-in" style="justify-content:center;">CONTACT</div>
-    <h2 class="fade-in">まずは無料で相談する</h2>
-    <p class="fade-in">調査が必要かどうかわからない場合も、お気軽にご相談ください。物件の住所と気になる点を教えていただければ、必要な調査内容をご提案します。</p>
-    <a href="https://forms.gle/kYHE2okJYP3gNjoY9" target="_blank" class="btn-primary fade-in" style="display:inline-block;margin-bottom:16px;">
-      お問い合わせフォームへ →
-    </a>
-    <div style="font-size:12px;color:var(--muted);" class="fade-in">
-      またはX（旧Twitter）のDMへ：
-      <a href="https://x.com/seika_takkennsi" target="_blank" style="color:var(--gold);text-decoration:none;">@seika_takkennsi</a>
+<!-- CONTACT FORM -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="area-badge"><span class="area-dot"></span>23区・横浜エリア 対応中</div>
+    <div class="section-eyebrow">Contact</div>
+    <h2 class="section-title">まずは無料で相談する</h2>
+    <p class="section-sub">物件の住所だけ送っていただければ、リスクがありそうかどうか30分以内にお返しします。調査が必要かどうかわからない段階でも構いません。</p>
+
+    <div class="contact-form" id="contactForm">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">お名前 <span>*</span></label>
+          <input type="text" class="form-input" id="f-name" placeholder="山田 太郎">
+        </div>
+        <div class="form-group">
+          <label class="form-label">メールアドレス <span>*</span></label>
+          <input type="email" class="form-input" id="f-email" placeholder="example@email.com">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">物件の所在地エリア</label>
+          <select class="form-select form-input" id="f-area">
+            <option value="">選択してください</option>
+            <option>東京23区（都心部）</option>
+            <option>東京23区（城東・城北・城南）</option>
+            <option>横浜市内</option>
+            <option>その他・要相談</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">ご希望のサービス</label>
+          <select class="form-select form-input" id="f-service">
+            <option value="">選択してください</option>
+            <option>簡易調査（¥9,800 ─ 書類のみ）</option>
+            <option>標準調査（¥19,800 ─ 役所調査込み）</option>
+            <option>フル調査（¥29,800 ─ 現地調査込み）</option>
+            <option>顧問契約（月額¥49,800）</option>
+            <option>まだ決まっていない・相談したい</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">ご相談内容 <span>*</span></label>
+        <textarea class="form-textarea" id="f-message" placeholder="物件の住所・気になる点・希望納期などをご記入ください。「急ぎで調査してほしい」などもOKです。"></textarea>
+      </div>
+      <div class="form-submit-row">
+        <button class="btn-primary" id="submitBtn" onclick="handleSubmit()">送信する →</button>
+        <p class="form-note">送信後24時間以内にご連絡します。<br>相談は完全無料です。</p>
+      </div>
+      <div class="form-success" id="formSuccess">
+        ✓ &nbsp;送信を受け付けました。24時間以内にご連絡します。
+      </div>
+    </div>
+
+    <div class="contact-alt">
+      <p>またはXのDMからも受け付けています</p>
+      <a href="https://x.com/seika_takkennsi" target="_blank">@seika_takkennsi →</a>
     </div>
   </div>
-</div>
+</section>
 
-<!-- Footer -->
+<!-- FOOTER -->
 <footer>
-  <div class="footer-logo">青歌</div>
-  <div class="footer-text">
-    物件リスクチェック｜不動産調査代行<br>
-    23区・横浜エリア対応｜18歳宅建士
+  <div class="footer-brand">
+    青歌
+    <p>物件リスクチェック｜不動産調査代行<br>23区・横浜エリア対応｜18歳宅建士</p>
   </div>
-  <div class="footer-links">
-    <a href="https://x.com/seika_takkennsi" target="_blank" class="footer-link">X（旧Twitter）</a>
-    <a href="#service" class="footer-link">サービス</a>
-    <a href="#pricing" class="footer-link">料金</a>
-    <a href="#contact" class="footer-link">お問い合わせ</a>
-  </div>
-  <div style="font-size:10px;color:#444;margin-top:16px;">© 2026 青歌 All rights reserved.</div>
+  <ul class="footer-links">
+    <li><a href="https://x.com/seika_takkennsi" target="_blank">X（旧Twitter）</a></li>
+    <li><a href="#service">サービス</a></li>
+    <li><a href="#pricing">料金</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#contact">お問い合わせ</a></li>
+  </ul>
+  <span class="footer-copy">© 2026 青歌 All rights reserved.</span>
 </footer>
 
 <script>
-// Scroll animations
-const observer = new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting) e.target.classList.add('visible');
-  });
-},{threshold:0.1});
-document.querySelectorAll('.fade-in').forEach(el=>observer.observe(el));
+// NAV shrink on scroll
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+});
 
-// Smooth scroll
-document.querySelectorAll('a[href^="#"]').forEach(a=>{
-  a.addEventListener('click',e=>{
-    e.preventDefault();
-    const target=document.querySelector(a.getAttribute('href'));
-    if(target) target.scrollIntoView({behavior:'smooth',block:'start'});
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      const children = entry.target.querySelectorAll(':scope > *');
+      if (children.length > 1) {
+        children.forEach((c, j) => { c.style.transitionDelay = `${j * 0.07}s`; c.style.opacity = '0'; c.style.transform = 'translateY(18px)'; c.style.transition = 'opacity 0.6s ease, transform 0.6s ease'; setTimeout(() => { c.style.opacity = '1'; c.style.transform = 'none'; }, j * 70); });
+      }
+      setTimeout(() => entry.target.classList.add('visible'), 50);
+    }
+  });
+}, { threshold: 0.07 });
+reveals.forEach(el => revealObs.observe(el));
+
+// Count-up animation
+function countUp(el, target, duration) {
+  let start = 0;
+  const step = target / (duration / 16);
+  const timer = setInterval(() => {
+    start = Math.min(start + step, target);
+    el.textContent = Math.floor(start);
+    if (start >= target) clearInterval(timer);
+  }, 16);
+}
+const countEls = document.querySelectorAll('.countup');
+const countObs = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      countUp(entry.target, parseInt(entry.target.dataset.target), 1200);
+      countObs.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.5 });
+countEls.forEach(el => countObs.observe(el));
+
+// FAQ accordion
+document.querySelectorAll('.faq-q').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i => {
+      i.classList.remove('open');
+      i.querySelector('.faq-a').style.maxHeight = '0';
+    });
+    if (!isOpen) {
+      item.classList.add('open');
+      item.querySelector('.faq-a').style.maxHeight = item.querySelector('.faq-a').scrollHeight + 'px';
+    }
   });
 });
+
+// Form submit — Googleフォーム連携
+async function handleSubmit() {
+  const name = document.getElementById('f-name').value.trim();
+  const email = document.getElementById('f-email').value.trim();
+  const area = document.getElementById('f-area').value;
+  const service = document.getElementById('f-service').value;
+  const msg = document.getElementById('f-message').value.trim();
+
+  if (!name || !email || !msg) {
+    alert('お名前・メールアドレス・ご相談内容は必須です。');
+    return;
+  }
+
+  const btn = document.getElementById('submitBtn');
+  btn.textContent = '送信中…';
+  btn.style.opacity = '0.6';
+  btn.style.pointerEvents = 'none';
+
+  // ご希望のサービスを相談内容の先頭に付加して送信
+  const combinedMsg = (service ? '【希望サービス: ' + service + '】\n' : '') + msg;
+
+  const formData = new URLSearchParams();
+  formData.append('entry.2124778055', name);          // お名前
+  formData.append('entry.1572705442', email);          // メールアドレス
+  formData.append('entry.526937337', area);            // エリア（物件の住所欄）
+  formData.append('entry.1250920593', combinedMsg);    // 調査してほしい内容（サービス＋相談内容）
+
+  try {
+    await fetch('https://docs.google.com/forms/d/e/1FAIpQLScF2DUy9T5UlFejMuIUAxTT7ZCHpW1JeFWI9wmNV_NgMGLAUw/formResponse', {
+      method: 'POST',
+      mode: 'no-cors',
+      body: formData
+    });
+  } catch(e) {
+    // no-cors では常にopaqueレスポンスなのでエラーでも送信は成功している場合が多い
+  }
+
+  document.getElementById('formSuccess').style.display = 'flex';
+  btn.style.display = 'none';
+}
 </script>
 </body>
 </html>
